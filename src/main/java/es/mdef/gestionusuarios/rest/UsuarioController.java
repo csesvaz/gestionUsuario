@@ -103,6 +103,7 @@ public class UsuarioController {
 							.collect(Collectors.toList()),
 					linkTo(methodOn(UsuarioController.class).getPreguntasUsuario(id)).withSelfRel());
 		}
+	
 	@GetMapping("{id}/familias")
 	public CollectionModel<FamiliaListaModel> getFamiliasUsuario(@PathVariable Long id) {
 		Set<FamiliaListaModel> familiaListaModels = repositorio.findById(id)

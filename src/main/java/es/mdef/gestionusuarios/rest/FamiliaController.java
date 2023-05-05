@@ -23,7 +23,7 @@ import es.mdef.gestionusuarios.repositorios.FamiliaRepositorio;
 import es.mdef.gestionusuarios.repositorios.PreguntaRepositorio;
 
 @RestController()
-@RequestMapping("/familia")
+@RequestMapping("/familias")
 public class FamiliaController {
 	private final FamiliaRepositorio repositorio;
 	private final FamiliaAssembler assembler;
@@ -68,14 +68,12 @@ public class FamiliaController {
 	    List<Usuario> usuarios = repositorio.findById(id)
 	            .orElseThrow(() -> new RegisterNotFoundException(id, "Familia"))
 	            .getPreguntas().stream().map(pregunta -> pregunta.getUsuario())
+	            .distinct()
 	            .collect(Collectors.toList());
 	    
-	    Set<UsuarioListaModel> usuarioListaModels = usuarios.stream()
-	            .map(usuario-> usuarioListaAssembler.toModel(usuario))
-	            .collect(Collectors.toSet());
 	    
 	    return CollectionModel.of(
-	            usuarioListaModels,
+	            usuarioListaAssembler.toCollection(usuarios),
 	            linkTo(methodOn(FamiliaController.class).usuariosFamilia(id)).withSelfRel());
 	}
 
