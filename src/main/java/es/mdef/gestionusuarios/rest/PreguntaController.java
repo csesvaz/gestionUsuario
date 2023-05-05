@@ -20,6 +20,7 @@ import es.mdef.gestionusuarios.entidades.Familia;
 import es.mdef.gestionusuarios.entidades.Pregunta;
 import es.mdef.gestionusuarios.entidades.Usuario;
 import es.mdef.gestionusuarios.repositorios.PreguntaRepositorio;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/preguntas")
@@ -60,7 +61,7 @@ public class PreguntaController {
 	
 	
 	@PostMapping
-	public PreguntaModel add(@RequestBody PreguntaPostModel model) {
+	public PreguntaModel add(@Valid @RequestBody PreguntaPostModel model) {
 		Pregunta Pregunta = repositorio.save(preguntaPostAssembler.toEntity(model));
 //		log.info("Añadido " + Pregunta);
 		return assembler.toModel(Pregunta);

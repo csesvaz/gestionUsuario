@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 public class Administrador extends Usuario {
 	@NotBlank(message="telefono es un campo obligatorio de la clase Administrador")
 	private String telefono;
+	private Role role;
 	
 	public String getTelefono() {
 		return telefono;
@@ -19,7 +20,10 @@ public class Administrador extends Usuario {
 	}
 
 	public Role getRole() {
-		return Role.administrador;
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public Administrador(String telefono) {

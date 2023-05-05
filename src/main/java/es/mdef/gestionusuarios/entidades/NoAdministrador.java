@@ -1,5 +1,6 @@
 package es.mdef.gestionusuarios.entidades;
 
+import es.mdef.gestionusuarios.entidades.Usuario.Role;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ public class NoAdministrador extends Usuario {
 	@NotBlank(message="departamento es un campo obligatorio de la clase NoAdministrador")
 	private Departamento departamento;
 	@NotBlank(message="tipo es un campo obligatorio de la clase NoAdministrador")
+	private Role role;
 	private Tipo tipo;
 	public Departamento getDepartamento() {
 		return departamento;
@@ -31,7 +33,10 @@ public class NoAdministrador extends Usuario {
 	}
 
 	public Role getRole() {
-		return Role.noAdministrador;
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	public NoAdministrador(Departamento departamento, Tipo tipo) {
 		super();

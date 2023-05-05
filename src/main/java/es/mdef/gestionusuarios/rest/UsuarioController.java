@@ -62,7 +62,7 @@ public class UsuarioController {
 
 	@PostMapping
 	public UsuarioModel add(@Valid @RequestBody UsuarioPostModel model) {
-		Usuario Usuario = repositorio.save(assembler.toEntity(postAssembler.toModel(model)));
+		Usuario Usuario = repositorio.save(postAssembler.toEntity(model));
 //		log.info("Añadido " + Usuario);
 		return assembler.toModel(Usuario);
 	}

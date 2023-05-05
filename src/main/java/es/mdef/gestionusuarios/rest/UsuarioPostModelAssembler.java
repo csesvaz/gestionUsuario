@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 import es.mdef.gestionusuarios.entidades.Administrador;
 import es.mdef.gestionusuarios.entidades.NoAdministrador;
 import es.mdef.gestionusuarios.entidades.Usuario;
+import es.mdef.gestionusuarios.entidades.Usuario.Role;
 
 @Component
-public class UsuarioPostModelAssembler  implements RepresentationModelAssembler<UsuarioPostModel, UsuarioModel>{
+public class UsuarioPostModelAssembler  implements RepresentationModelAssembler<Usuario, UsuarioPostModel>{
 
 	public UsuarioPostModel toModel(Usuario entity) {
 		UsuarioPostModel model = new UsuarioPostModel();
@@ -41,16 +42,40 @@ public class UsuarioPostModelAssembler  implements RepresentationModelAssembler<
 		return model;
 	}
 
-	public UsuarioModel toModel(UsuarioPostModel model) {
-		UsuarioModel usuario = new UsuarioModel();
+	public Usuario toEntity(UsuarioPostModel model) {
+		Usuario usuario = new Usuario();
+		
+		switch (model.getRole()) {
+        case administrador: {
+                Administrador administrador = new Administrador();
+                administrador.setTelefono(model.getTelefono());
+                administrador.setRole(Role.administrador);
+                usuario=administrador;
+            
+            break;
+        }
+        case noAdministrador: {
+            
+			NoAdministrador noAdministrador = new NoAdministrador();
+
+                noAdministrador.setDepartamento(model.getDepartamento());
+                noAdministrador.setTipo(model.getTipo());
+                noAdministrador.setRole(Role.noAdministrador);
+                usuario=noAdministrador;
+            break;
+        }
+        default:
+            throw new IllegalArgumentException("Unexpected value: " + model.getRole());
+    }
 		usuario.setNombre(model.getNombre());
 		usuario.setUsername(model.getUsername());
-		usuario.setRole(model.getRole());
-		usuario.setDepartamento(model.getDepartamento());
-		usuario.setTipo(model.getTipo());
-		usuario.setTelefono(model.getTelefono());
+		usuario.setContrasena(model.getContrasena());
+		
+
 		return usuario;
 	}
+
+	
 
 
 }

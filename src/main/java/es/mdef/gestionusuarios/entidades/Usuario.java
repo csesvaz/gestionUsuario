@@ -39,7 +39,7 @@ public class Usuario {
 	private String username;
 	@NotBlank(message="contrasena es un campo obligatorio de la clase Usuario")
 	private String contrasena;
-	@NotBlank(message="role es un campo obligatorio de la clase Usuario")
+	
 	private Role role;
 
 	@OneToMany(mappedBy = "usuario")
@@ -78,7 +78,7 @@ public class Usuario {
 	}
 
 	public Role getRole() {
-		return null;
+		return role;
 	}
 
 	public List<Pregunta> getPreguntas() {
