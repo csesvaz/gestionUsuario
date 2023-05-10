@@ -2,6 +2,8 @@ package es.mdef.gestionusuarios.entidades;
 
 import java.util.List;
 
+import org.apache.catalina.valves.rewrite.InternalRewriteMap.Escape;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -15,7 +17,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="familia")
-public class Familia {
+public class Familia extends es.mdef.support.Familia   {
 	@Column(unique=true, name = "enunciado")
 	@NotBlank(message="enunciado es un campo obligatorio de la clase Familia")
 	private String enunciado;
