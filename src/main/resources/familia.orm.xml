@@ -1,14 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd" 
-	version="1.0"> 
-    <mapped-superclass class="es.mdef.support.Familia" access="FIELD">
-        <attributes> 
-            <id name="id"> 
-                <generated-value strategy="IDENTITY"/> 
-            </id> 
-            <basic name="enunciado"/> 
-        </attributes>
-     </mapped-superclass>
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+	version="1.0">
+	<mapped-superclass class="es.mdef.support.Familia" access="FIELD">
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="enunciado" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="es.mdef.gestionusuarios.entidades.Usuario" access="FIELD">
+		<table name="USUARIOS" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<discriminator-value>null</discriminator-value>
+		<discriminator-column name="rol_usuario" discriminator-type="CHAR" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="nombre" optional="false" />
+			<basic name="username" optional="false" />
+			<basic name="contrasena" optional="false" />
+			<basic name="role" />
+			<one-to-many name="preguntas" mapped-by="usuario" />
+		</attributes>
+	</entity>
+	<entity class="es.mdef.gestionusuarios.entidades.Pregunta" access="FIELD">
+		<table name="PREGUNTAS" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="enunciado" optional="false" />
+			<many-to-one name="usuario" fetch="LAZY">
+				<join-column name="UsuarioId"/>
+			</many-to-one>
+			<many-to-one name="familia" fetch="LAZY" optional="false">
+				<join-column name="FamiliaId"/>
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="es.mdef.gestionusuarios.entidades.NoAdministrador" access="FIELD">
+		<discriminator-value>N</discriminator-value>
+		<attributes>
+			<basic name="departamento" optional="false" />
+			<basic name="role" optional="false" />
+		</attributes>
+	</entity>
+	<entity class="es.mdef.gestionusuarios.entidades.Familia" access="FIELD">
+		<table name="FAMILIA" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="enunciado" optional="false">
+				<column unique="true" />
+			</basic>
+			<one-to-many name="preguntas" mapped-by="familia" />
+		</attributes>
+	</entity>
+	<entity class="es.mdef.gestionusuarios.entidades.Administrador" access="FIELD">
+		<discriminator-value>A</discriminator-value>
+		<attributes>
+			<basic name="telefono" optional="false" />
+		</attributes>
+	</entity>
 </entity-mappings>

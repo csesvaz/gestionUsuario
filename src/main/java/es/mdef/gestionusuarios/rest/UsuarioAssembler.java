@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import es.mdef.gestionusuarios.entidades.Usuario;
+import es.mdef.gestionusuarios.entidades.Usuario.Role;
 import es.mdef.gestionusuarios.entidades.Administrador;
 import es.mdef.gestionusuarios.entidades.NoAdministrador;
 
@@ -23,6 +24,7 @@ public class UsuarioAssembler implements RepresentationModelAssembler<Usuario, U
 			Administrador administrador = (Administrador) entity;
 			model.setRole(administrador.getRole());
 			model.setTelefono(administrador.getTelefono());
+			model.setRole(Role.administrador);
 			entity = administrador;
 			break;
 		}
@@ -31,6 +33,7 @@ public class UsuarioAssembler implements RepresentationModelAssembler<Usuario, U
 			model.setRole(noAdministrador.getRole());
 			model.setDepartamento(noAdministrador.getDepartamento());
 			model.setTipo(noAdministrador.getTipo());
+			model.setRole(Role.noAdministrador);
 			entity = noAdministrador;
 			break;
 		}
@@ -48,13 +51,16 @@ public class UsuarioAssembler implements RepresentationModelAssembler<Usuario, U
 	    switch (model.getRole()) {
 	        case administrador: {
 	            usuario = new Administrador();
+	            
 	            ((Administrador) usuario).setTelefono(model.getTelefono());
+	            ((Administrador) usuario).setRole(Role.administrador);
 	            break;
 	        }
 	        case noAdministrador: {
 	            usuario = new NoAdministrador();
 	            ((NoAdministrador) usuario).setDepartamento(model.getDepartamento());
 	            ((NoAdministrador) usuario).setTipo(model.getTipo());
+	            ((NoAdministrador) usuario).setRole(Role.noAdministrador);
 	            break;
 	        }
 	        default:

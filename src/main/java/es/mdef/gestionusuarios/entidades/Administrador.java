@@ -1,13 +1,7 @@
 package es.mdef.gestionusuarios.entidades;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotBlank;
-
-@Entity
-@DiscriminatorValue("A")
 public class Administrador extends Usuario {
-	@NotBlank(message="telefono es un campo obligatorio de la clase Administrador")
+	
 	private String telefono;
 	private Role role;
 	
